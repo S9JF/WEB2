@@ -1,0 +1,64 @@
+
+global
+    log 127.0.0.1 local0
+    maxconn 100000
+    tune.maxaccept 500
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5s
+    timeout client  60s
+    timeout server  60s
+    timeout tunnel  1h   # สำคัญสำหรับ WebSocket
+
+# หน้า stat (ดูเฉพาะภายใน)
+listen stats
+    bind 127.0.0.1:9999
+    stats enable
+    stats uri /stats
+    stats auth admin:admin@123
+
+# รับทราฟฟิกจาก Cloudflare Tunnel (ThingsBoard)
+frontend fe_cf
+    bind 127.0.0.1:8088
+    option forwardfor
+    http-request set-header X-Forwarded-Proto https
+    http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+
+    # เส้นทาง MQTT over WebSocket
+    acl is_mqtt_ws path_beg /mqtt
+    use_backend be_mosquitto_ws if is_mqtt_ws
+
+    # ดีฟอลต์ไป TB
+    default_backend be_thingsboard
+
+# รับทราฟฟิกจาก Cloudflare Tunnel (Factory IoT Web)
+frontend fe_web
+    bind 127.0.0.1:8089
+    option forwardfor
+    http-request set-header X-Forwarded-Proto https
+    http-request set-header X-Forwarded-Host %[req.hdr(Host)]
+
+    default_backend be_factory_web
+
+backend be_thingsboard
+    server tb1 127.0.0.1:8080 check
+
+backend be_mosquitto_ws
+    # เปิด header upgrade ให้เคส WebSocket เท่านั้น
+    http-request set-header Connection "upgrade" if { req.hdr(Upgrade) -i websocket }
+    http-request set-header Upgrade "websocket"  if { req.hdr(Upgrade) -i websocket }
+
+    # อย่าใช้ httpchk กับ WebSocket (จะทำให้ถูก mark DOWN)
+    # ถ้าจะมี health-check ให้ใช้ tcp-check แทนแบบนี้:
+    # option tcp-check
+    # tcp-check connect
+
+    server mosq1 127.0.0.1:9001 maxconn 2000
+
+backend be_factory_web
+    server web1 127.0.0.1:3000 check
+

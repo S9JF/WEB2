@@ -1,0 +1,11 @@
+Model Information:
+* title:	Water Pump
+* source:	https://sketchfab.com/3d-models/water-pump-76ca12fd7aec4748b96445892b1a5d95
+* author:	OOtis_Pro (https://sketchfab.com/Mohit.Lodhi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Water Pump" (https://sketchfab.com/3d-models/water-pump-76ca12fd7aec4748b96445892b1a5d95) by OOtis_Pro (https://sketchfab.com/Mohit.Lodhi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

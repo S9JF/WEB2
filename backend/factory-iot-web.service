@@ -1,0 +1,18 @@
+[Unit]
+Description=Factory IoT Web Backend
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=cpe406
+WorkingDirectory=/home/cpe406/Web/backend
+ExecStart=/usr/bin/node /home/cpe406/Web/backend/server.js
+Restart=on-failure
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=factory-iot-web
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target

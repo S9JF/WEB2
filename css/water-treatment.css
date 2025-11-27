@@ -1,0 +1,189 @@
+/* Water Treatment 3D Monitor Styles */
+
+.page-container { min-height: 100vh; padding: 1.5rem; background: var(--color-bg); }
+
+/* Header */
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.header-left { display: flex; align-items: center; gap: 1rem; }
+.logo-section { display: flex; align-items: center; gap: 0.75rem; }
+.logo { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; }
+.logo.water-logo { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+.brand h1 { font-size: 1.25rem; font-weight: 700; }
+.brand p { font-size: 0.813rem; color: var(--color-text-secondary); }
+
+.header-right { display: flex; align-items: center; gap: 0.75rem; }
+.btn-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--color-surface); border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; color: var(--color-text-secondary); }
+.btn-icon:hover { border-color: var(--color-blue-primary); color: var(--color-blue-primary); }
+
+.connection-status { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 20px; font-size: 0.813rem; }
+.connection-status .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-warning); animation: pulse 2s infinite; }
+.connection-status.connected .status-dot { background: var(--color-success); }
+
+/* Stats Bar */
+.stats-bar { display: flex; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem 1.5rem; background: var(--color-surface); border-radius: 16px; border: 1px solid var(--color-border); }
+.stat-item { display: flex; flex-direction: column; padding: 0 1.5rem; border-right: 1px solid var(--color-border); }
+.stat-item:last-child { border-right: none; }
+.stat-item .stat-label { font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-item .stat-value { font-size: 1.5rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.stat-item .stat-value small { font-size: 0.75rem; font-weight: 400; }
+.stat-item.running .stat-value { color: var(--color-success); }
+.stat-item.warning .stat-value { color: var(--color-warning); }
+.stat-item.stopped .stat-value { color: var(--color-text-secondary); }
+
+/* Plant Container */
+.plant-container { position: relative; background: var(--color-surface); border-radius: 20px; border: 1px solid var(--color-border); padding: 2rem; overflow: hidden; min-height: 500px; }
+
+/* 3D Plant View */
+.plant-3d { display: flex; gap: 0.5rem; perspective: 1200px; transition: transform 0.5s ease; transform-style: preserve-3d; }
+.plant-3d.view-top { transform: rotateX(0deg) rotateY(0deg); }
+.plant-3d.view-front { transform: rotateX(20deg) rotateY(0deg) translateY(-20px); }
+.plant-3d.view-iso { transform: rotateX(25deg) rotateY(-15deg) translateY(-30px); }
+
+/* Water Flow Animation */
+.water-flow { position: absolute; top: 50%; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.6), rgba(6, 182, 212, 0.3), transparent); background-size: 200% 100%; animation: waterFlow 3s linear infinite; z-index: 0; }
+@keyframes waterFlow { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+/* Plant Stage */
+.plant-stage { flex: 1; min-width: 140px; display: flex; flex-direction: column; align-items: center; padding: 1rem 0.5rem; background: rgba(59, 130, 246, 0.02); border-radius: 16px; border: 1px solid var(--color-border); position: relative; transform-style: preserve-3d; transition: all 0.3s ease; }
+.plant-stage:hover { transform: translateY(-5px) translateZ(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-color: var(--color-blue-primary); }
+
+.stage-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-secondary); margin-bottom: 1rem; padding: 0.25rem 0.75rem; background: var(--color-bg); border-radius: 20px; }
+
+.stage-content { display: flex; flex-direction: column; align-items: center; gap: 1rem; flex: 1; }
+
+/* Water Tanks */
+.water-tank { width: 80px; height: 60px; background: rgba(6, 182, 212, 0.1); border: 2px solid rgba(6, 182, 212, 0.3); border-radius: 8px 8px 12px 12px; position: relative; overflow: hidden; }
+.water-tank.large { width: 100px; height: 80px; }
+
+.water-level { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.7)); transition: height 0.5s ease; animation: waveMotion 2s ease-in-out infinite; }
+.water-level.clear { background: linear-gradient(180deg, rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.5)); }
+.water-level.treated { background: linear-gradient(180deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.6)); }
+@keyframes waveMotion { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+
+.sludge-layer { position: absolute; bottom: 0; left: 0; right: 0; height: 15%; background: linear-gradient(180deg, rgba(120, 113, 108, 0.3), rgba(120, 113, 108, 0.6)); border-radius: 0 0 10px 10px; }
+
+/* Mixer Animation */
+.mixer-animation { position: absolute; top: 50%; left: 50%; width: 20px; height: 20px; margin: -10px 0 0 -10px; border: 2px dashed rgba(6, 182, 212, 0.5); border-radius: 50%; animation: spin 2s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+/* Filter Unit */
+.filter-unit { display: flex; gap: 4px; }
+.filter-media { width: 25px; height: 60px; background: linear-gradient(180deg, #e5e7eb 0%, #d1d5db 30%, #9ca3af 60%, #6b7280 100%); border-radius: 4px; border: 1px solid var(--color-border); }
+
+/* Chemical Tank */
+.chemical-tank { width: 50px; height: 70px; background: rgba(245, 158, 11, 0.1); border: 2px solid rgba(245, 158, 11, 0.3); border-radius: 8px 8px 4px 4px; position: relative; overflow: hidden; }
+.chemical-level { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, rgba(245, 158, 11, 0.4), rgba(245, 158, 11, 0.7)); }
+
+/* Equipment */
+.equipment-group { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+
+.equipment { width: 56px; height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.25rem; background: var(--color-surface); border: 2px solid var(--color-border); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; position: relative; }
+.equipment:hover { transform: scale(1.1); box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 10; }
+
+.equipment-icon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; }
+.equipment-icon svg { width: 24px; height: 24px; }
+
+.equipment-status { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; border-radius: 50%; }
+
+.equipment-name { font-size: 0.625rem; font-weight: 600; color: var(--color-text-secondary); }
+
+/* Equipment States */
+.equipment.running { border-color: var(--color-success); }
+.equipment.running .equipment-status { background: var(--color-success); animation: pulse 2s infinite; }
+.equipment.running .equipment-icon { color: var(--color-success); }
+
+.equipment.warning { border-color: var(--color-warning); }
+.equipment.warning .equipment-status { background: var(--color-warning); animation: pulse 1s infinite; }
+.equipment.warning .equipment-icon { color: var(--color-warning); }
+
+.equipment.stopped { border-color: var(--color-border); opacity: 0.6; }
+.equipment.stopped .equipment-status { background: var(--color-text-secondary); }
+.equipment.stopped .equipment-icon { color: var(--color-text-secondary); }
+
+.equipment.error { border-color: var(--color-danger); }
+.equipment.error .equipment-status { background: var(--color-danger); animation: pulse 0.5s infinite; }
+.equipment.error .equipment-icon { color: var(--color-danger); }
+
+/* Real Device Badge */
+.real-badge { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); padding: 2px 6px; background: var(--color-success); color: white; font-size: 0.5rem; font-weight: 700; border-radius: 4px; animation: pulse 2s infinite; }
+.equipment.real-device { border-width: 3px; box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+/* Pipes */
+.pipe { position: absolute; background: var(--color-border); }
+.pipe-horizontal { right: -12px; top: 50%; width: 24px; height: 4px; transform: translateY(-50%); }
+.plant-stage:last-child .pipe { display: none; }
+
+/* Output Arrow */
+.output-arrow { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; color: var(--color-success); margin-top: 1rem; }
+.output-arrow svg { width: 32px; height: 32px; animation: arrowPulse 1.5s ease-in-out infinite; }
+.output-arrow span { font-size: 0.75rem; font-weight: 600; }
+@keyframes arrowPulse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+
+/* View Controls */
+.view-controls { position: absolute; bottom: 1.5rem; right: 1.5rem; display: flex; gap: 0.5rem; background: var(--color-bg); padding: 0.5rem; border-radius: 12px; border: 1px solid var(--color-border); }
+.view-btn { padding: 0.5rem 1rem; border: none; background: transparent; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 0.813rem; font-weight: 500; color: var(--color-text-secondary); cursor: pointer; transition: all 0.3s ease; }
+.view-btn:hover { color: var(--color-text-primary); }
+.view-btn.active { background: var(--color-blue-primary); color: white; }
+
+/* Equipment Modal */
+.equipment-modal { max-width: 480px; }
+.modal-title-section { display: flex; align-items: center; gap: 1rem; }
+.equipment-modal-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.equipment-modal-icon.running { background: rgba(16, 185, 129, 0.1); color: var(--color-success); }
+.equipment-modal-icon.warning { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); }
+.equipment-modal-icon.stopped { background: rgba(107, 114, 128, 0.1); color: var(--color-text-secondary); }
+.equipment-modal-icon.error { background: rgba(239, 68, 68, 0.1); color: var(--color-danger); }
+.modal-subtitle { font-size: 0.875rem; color: var(--color-text-secondary); margin-top: 0.25rem; }
+
+.status-banner { display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem; border-radius: 10px; margin-bottom: 1.5rem; font-weight: 600; }
+.status-banner.running { background: rgba(16, 185, 129, 0.1); color: var(--color-success); }
+.status-banner.warning { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); }
+.status-banner.stopped { background: rgba(107, 114, 128, 0.1); color: var(--color-text-secondary); }
+.status-banner.error { background: rgba(239, 68, 68, 0.1); color: var(--color-danger); }
+
+.telemetry-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+.telemetry-item { padding: 1rem; background: var(--color-bg); border-radius: 12px; text-align: center; }
+.telemetry-item .label { font-size: 0.75rem; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+.telemetry-item .value { font-size: 1.25rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.telemetry-item .unit { font-size: 0.75rem; color: var(--color-text-secondary); margin-left: 0.25rem; }
+
+.modal-actions { display: flex; gap: 1rem; }
+.modal-actions .btn { flex: 1; justify-content: center; }
+
+/* Modal Overlay */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(31, 41, 55, 0.5); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
+.modal-overlay.active { display: flex; }
+.modal { background: var(--color-surface); border-radius: 20px; padding: 1.5rem; width: 90%; max-width: 500px; box-shadow: var(--shadow-lg); animation: modalSlideUp 0.3s ease-out; }
+.modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+.modal-title { font-size: 1.25rem; font-weight: 600; }
+.modal-close { padding: 0.5rem; border: none; background: transparent; color: var(--color-text-secondary); cursor: pointer; border-radius: 8px; transition: all 0.3s ease; }
+.modal-close:hover { background: var(--color-bg); color: var(--color-text-primary); }
+
+@keyframes modalSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Button */
+.btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.25rem; border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; border: none; }
+.btn-primary { background: var(--color-blue-primary); color: white; }
+.btn-primary:hover { background: var(--color-blue-dark); }
+.btn-outline { background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary); }
+.btn-outline:hover { border-color: var(--color-blue-primary); color: var(--color-blue-primary); }
+
+/* Dark Mode */
+[data-theme="dark"] .modal-overlay { background: rgba(0, 0, 0, 0.7); }
+[data-theme="dark"] .plant-stage { background: rgba(59, 130, 246, 0.05); }
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .plant-3d { flex-wrap: wrap; }
+    .plant-stage { min-width: calc(33.333% - 0.5rem); }
+}
+
+@media (max-width: 768px) {
+    .page-container { padding: 1rem; }
+    .stats-bar { flex-wrap: wrap; }
+    .stat-item { flex: 1; min-width: 80px; padding: 0.5rem; border-right: none; border-bottom: 1px solid var(--color-border); }
+    .plant-stage { min-width: calc(50% - 0.5rem); }
+    .view-controls { bottom: 1rem; right: 1rem; }
+}
